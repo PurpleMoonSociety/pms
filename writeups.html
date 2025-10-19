@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writeups | Purple Moon Society</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --dark-purple: #0a041a; --mid-purple: #2c1a4d; --bright-purple: #9d4edd; --neon-pink: #f000ff; --light-grey: #c0c0c0; --text-color: #e0e0e0; }
+        body { background-color: var(--dark-purple); color: var(--text-color); font-family: 'Roboto Mono', monospace; padding-top: 70px; }
+        .navbar { background-color: rgba(10, 4, 26, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--mid-purple); }
+        .navbar-brand { font-family: 'Orbitron', sans-serif; color: var(--bright-purple) !important; }
+        .nav-link { color: var(--light-grey) !important; transition: color 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: var(--neon-pink) !important; text-shadow: 0 0 5px var(--neon-pink); }
+        .page-header { padding: 100px 0; text-align: center; border-bottom: 1px solid var(--mid-purple); }
+        .page-title { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: #fff; text-shadow: 0 0 10px var(--bright-purple); }
+        .post-entry { background-color: var(--mid-purple); border-left: 4px solid var(--neon-pink); padding: 25px; margin-bottom: 30px; border-radius: 8px; transition: transform 0.3s ease; }
+        .post-entry:hover { transform: translateY(-5px); }
+        .post-title { margin-top: 0; }
+        .post-title a { color: #fff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 1.8rem; transition: color 0.3s ease; }
+        .post-title a:hover { color: var(--neon-pink); }
+        .post-meta { font-size: 0.9rem; color: var(--light-grey); margin-bottom: 15px; }
+        .post-description { color: var(--text-color); }
+        footer { background-color: var(--mid-purple); padding: 20px 0; text-align: center; border-top: 1px solid var(--bright-purple); margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Purple Moon Society</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#members">Members</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="writeups.html">Writeups</a></li>
+                    <li class="nav-item"><a class="nav-link" href="competitions.html">Competitions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://ctftime.org/team/409255">CTFtime</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1 class="page-title">CTF Writeups</h1>
+    </header>
+
+    <main class="container py-5">
+        <div class="post-entry">
+            <h2 class="post-title"><a href="https://example.com/writeup1" target="_blank">N/A</a></h2>
+            <div class="post-meta">Author: N/A</div>
+            <p class="post-description">N/A</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Purple Moon Society. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

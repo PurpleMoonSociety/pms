@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purple Moon Society | CTF Team</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Custom CSS Variables --- */
+        :root {
+            --dark-purple: #0a041a;
+            --mid-purple: #2c1a4d;
+            --bright-purple: #9d4edd;
+            --neon-pink: #f000ff;
+            --light-grey: #c0c0c0;
+            --text-color: #e0e0e0;
+        }
+
+        /* --- General Body Styling --- */
+        body {
+            background-color: var(--dark-purple);
+            color: var(--text-color);
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* --- Animations --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes glitch {
+            0% { text-shadow: .05em 0 0 rgba(255,0,255,.75), -.05em 0 0 rgba(0,255,255,.75); }
+            14% { text-shadow: .05em 0 0 rgba(255,0,255,.75), -.05em 0 0 rgba(0,255,255,.75); }
+            15% { text-shadow: -.05em -.025em 0 rgba(255,0,255,.75), .025em .025em 0 rgba(0,255,255,.75); }
+            49% { text-shadow: -.05em -.025em 0 rgba(255,0,255,.75), .025em .025em 0 rgba(0,255,255,.75); }
+            50% { text-shadow: .025em .05em 0 rgba(255,0,255,.75), .05em 0 0 rgba(0,255,255,.75); }
+            99% { text-shadow: .025em .05em 0 rgba(255,0,255,.75), .05em 0 0 rgba(0,255,255,.75); }
+            100% { text-shadow: -.05em 0 0 rgba(255,0,255,.75), .05em 0 0 rgba(0,255,255,.75); }
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background-color: rgba(10, 4, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--mid-purple);
+        }
+        .navbar-brand {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--bright-purple) !important;
+            animation: glitch 1s linear infinite;
+        }
+        .nav-link {
+            color: var(--light-grey) !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--neon-pink) !important;
+            text-shadow: 0 0 5px var(--neon-pink);
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-content { z-index: 1; }
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--bright-purple), 0 0 20px var(--bright-purple);
+        }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--light-grey);
+        }
+        .typed-cursor {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+
+        /* --- Section Styling --- */
+        section { padding: 80px 0; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--bright-purple);
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 3px;
+            background: var(--neon-pink);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        /* --- About Section & Carousel --- */
+        .about-carousel {
+            max-width: 800px;
+            margin: -20px auto 40px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--mid-purple);
+        }
+        .about-carousel img {
+            height: 400px;
+            object-fit: cover;
+        }
+        #about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        /* --- Members Section & Carousel --- */
+        .member-card {
+            background-color: var(--mid-purple);
+            border: 1px solid var(--bright-purple);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            margin: 0 10px; /* Add some spacing between cards */
+        }
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(157, 78, 221, 0.3);
+        }
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-pink);
+            margin: 0 auto 15px;
+            object-fit: cover;
+        }
+        .member-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .member-handle {
+            font-size: 1rem;
+            color: var(--light-grey);
+            margin-bottom: 15px;
+        }
+        .member-specialization {
+            font-size: 0.9rem;
+            display: inline-block;
+            background-color: rgba(157, 78, 221, 0.2);
+            color: var(--bright-purple);
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 3px;
+        }
+
+        /* --- Contact Section Form --- */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .form-control {
+            background-color: var(--mid-purple);
+            border: 1px solid var(--bright-purple);
+            color: var(--text-color);
+            border-radius: 5px;
+        }
+        .form-control:focus {
+            background-color: var(--mid-purple);
+            color: var(--text-color);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        .form-control::placeholder {
+            color: var(--light-grey);
+            opacity: 0.7;
+        }
+        .btn-submit {
+            background-color: var(--bright-purple);
+            border-color: var(--bright-purple);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+            transform: scale(1.05);
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--mid-purple);
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--bright-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">Purple Moon Society</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#members">Members</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="writeups.html">Writeups</a></li>
+                    <li class="nav-item"><a class="nav-link" href="competitions.html">Competitions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://ctftime.org/team/409255">CTFtime</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Purple Moon Society</h1>
+            <p class="hero-subtitle">We are <span id="typed"></span></p>
+        </div>
+    </section>
+
+    <main>
+        <section id="about" class="fade-in-section">
+            <div class="container">
+                <h2 class="section-title">About Us</h2>
+                
+                <div id="aboutCarousel" class="carousel slide about-carousel" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3liZXJzZWN1cml0eSxjb2RlLHNlcnZlcnx8fHx8fDE3Mjg1ODQxNjE&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" class="d-block w-100" alt="Cybersecurity operations room">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y29kaW5nLGhhY2tlcixkYXJrfHx8fHx8MTcyODU4NDIwMw&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" class="d-block w-100" alt="Code on a screen">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://images.unsplash.com/photo-1544890225-2fde0e66ea9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dGVhbSxjb21wdXRlcnMsY29tcGV0aXRpb258fHx8fHwxNzI4NTg0MjI4&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080" class="d-block w-100" alt="Team working on computers">
+                        </div>
+                    </div>
+                </div>
+
+                <p>
+                    Forged in the digital twilight, the Purple Moon Society is a collective of cybersecurity enthusiasts dedicated to solving the world's most intricate digital puzzles. We thrive on the adrenaline of Capture The Flag competitions, specializing in everything from web exploitation to reverse engineering. Our mission is to learn, innovate, and dominate the leaderboard.
+                </p>
+            </div>
+        </section>
+
+        <section id="members" class="fade-in-section">
+            <div class="container">
+                <h2 class="section-title">Our Operators</h2>
+                
+                <div id="membersCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="https://i.pravatar.cc/150?u=1" alt="Avatar" class="member-avatar"><h3 class="member-name">AD3NCA</h3><p class="member-handle">[Team Captain]</p><div><span class="member-specialization">Web Exploitation</span><span class="member-specialization">OSINT</span><span class="member-specialization">Misc</span><span class="member-specialization">Forensics</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="https://i.pravatar.cc/150?u=2" alt="Avatar" class="member-avatar"><h3 class="member-name">b4y0n3tta</h3><p class="member-handle">[Vice Captain]</p><div><span class="member-specialization">Cryptography</span><span class="member-specialization">Misc</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Reverse Engineering</span><span class="member-specialization">Forensics</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">OSINT</span><span class="member-specialization">Misc</span></div></div></div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Pwn</span><span class="member-specialization">Binary Exploitation</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Web Exploitation</span><span class="member-specialization">XSS</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Forensics</span><span class="member-specialization">Memory Analysis</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Privilege Escalation</span><span class="member-specialization">Pwn</span></div></div></div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Networking</span><span class="member-specialization">Wireshark</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Reverse Engineering</span><span class="member-specialization">Ghidra</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Cryptography</span><span class="member-specialization">Math</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Mobile</span><span class="member-specialization">Android</span></div></div></div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Hardware</span><span class="member-specialization">IoT</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">OSINT</span><span class="member-specialization">Social Engineering</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Web Exploitation</span><span class="member-specialization">SQLi</span></div></div></div>
+                                <div class="col-lg-3 col-md-6"><div class="member-card"><img src="img/unknown.png" alt="Avatar" class="member-avatar"><h3 class="member-name">N/A</h3><p class="member-handle">[Member]</p><div><span class="member-specialization">Misc</span><span class="member-specialization">Scripting</span></div></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#membersCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#membersCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="fade-in-section">
+            <div class="container text-center">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="mb-5">Have a question or want to collaborate? Drop us a line.</p>
+                
+                <form class="contact-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Subject" required>
+                    </div>
+                    <div class="mb-4">
+                        <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Send Message</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Purple Moon Society. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        // --- Easter Egg for fellow devs ---
+        console.log("%c[+] Connection established. Welcome to the Purple Moon Society console.", "color:#9d4edd;font-family:monospace;font-size:16px;");
+
+        // --- Particle.js Config ---
+        particlesJS("particles-js", {
+            "particles": { "number": {"value": 80, "density": {"enable": true, "value_area": 800}}, "color": {"value": "#9d4edd"}, "shape": {"type": "circle"}, "opacity": {"value": 0.5, "random": false}, "size": {"value": 3, "random": true}, "line_linked": {"enable": true, "distance": 150, "color": "#9d4edd", "opacity": 0.4, "width": 1}, "move": {"enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false}}, "interactivity": {"detect_on": "canvas", "events": {"onhover": {"enable": true, "mode": "grab"}, "onclick": {"enable": true, "mode": "push"}, "resize": true}, "modes": {"grab": {"distance": 140, "line_linked": {"opacity": 1}}, "push": {"particles_nb": 4}}}, "retina_detect": true
+        });
+
+        // --- Typed.js Config ---
+        var typed = new Typed('#typed', {
+            strings: ["problem solvers.", "digital explorers.", "pwnage specialists.", "cybersecurity enthusiasts."], typeSpeed: 50, backSpeed: 30, loop: true
+        });
+
+        // --- On-Scroll Fade-In Animation ---
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('is-visible'); }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => { observer.observe(section); });
+    </script>
+</body>
+</html>
